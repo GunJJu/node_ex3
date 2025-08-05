@@ -1,22 +1,19 @@
-const express = require("express")
-const app = express()
-const PORT = 3000
+const express = require("express");
+const app = express();
+const PORT = 3000;
+const bookRoutes = require("./routes/books");
 
-//user.js 불러오기
-const userRouter = require("./routes/user")
-const router = require("./routes/user")
+// 요청 본문 JSON 파싱
+app.use(express.json());
 
-app.use(express.json)
-app.use("/users", userRouter)
+// 라우터 마운트
+app.use("/books", bookRoutes);
 
+// 루트 경로
+app.get("/", (req, res) => {
+    res.send("Hello, RESTful API!");
+});
 
-
-app.get("/", (req, res)=>{
-    res.send("hello, world!")
-})
-
-
-
-app.listen(PORT, ()=>{
-    console.log("Server is running...!")
-})
+app.listen(PORT, () => {
+    console.log(`📚 Book API Server is running at http://localhost:${PORT}`);
+});
